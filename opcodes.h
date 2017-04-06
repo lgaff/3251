@@ -75,4 +75,28 @@ typedef struct INSTRUCTION {
    unsigned char cpu_revision;
 } instruction_t;
 
+/**
+ * .. :c:var: instruction_t rt_opcode_table[256]
+ *    Runtime table of CPU instructions mapped to their Assembler mnemonic and addressing mode.
+ *    This is populated by :c:func:`construct_opcode_table` on program load, for use by the implementation.
+ *    After population, each index must refer to either a valid CPU instruction from :c:data:`opcode_table`, or
+ *    in the case of bytes for which no valid instruction exists, a reference to :c:data:`invalid_opcode`.
+ */
+extern instruction_t ** rt_opcode_table;
+
+/**
+ .. :C:function:: void construct_opcode_table(enum cpu_revision revision)
+    Construct an opcode table from the contents of :c:data:`_opcode_table` for the processor revision specified.
+    Populates the runtime opcode table :c:data:`rt_opcode_table`.
+
+    :param enum cpu_revision revision: The revision number for which to construct an opcode table. Pass with REV_UNDOCUMENTED to also include any undocumented instructions.
+*/
+void construct_opcode_table (enum cpu_revision);
+
+/**
+ * .. :c:function:: void print_opcode_table ()
+ *    Print the contents of :c:data:`rt_opcode_table` to stdout. Useful for debugging misallocated opcodes or for reference purposes.
+ */
+void print_opcode_table ();
+
 #endif // _INSTRUCTIONS_H
