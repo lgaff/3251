@@ -18,87 +18,87 @@ int disassemble (FILE * rom) {
    }
 
    while (pc < rom_length + 0x8000) {
-      printf ("$%04x> ", pc);
+      printf ("$%02X> ", pc);
       pc++;
       instruction = (instruction_t *)NULL;
       opcode = getc(rom);
       instruction = get_instruction (opcode);
 
       if (instruction == (instruction_t *)NULL) {
-         printf ("ERROR: unknown instruction found at %04x: %02x\n", pc, opcode);
+         printf ("ERROR: unknown instruction found at %02X: %02X\n", pc, opcode);
          return -1;
       } else {
          switch (instruction->address_mode) {
             case INVALID:
                break;
             case ACCUMULATOR:
-               printf ("%02x\t: %s", instruction->opcode, instruction->mnemonic);
+               printf ("%02X\t: %s", instruction->opcode, instruction->mnemonic);
                break; // Null operand1
             case IMMEDIATE:
                operand1 = getc(rom);
                pc++;
-               printf ("%02x %02x\t: %s #$%02x", instruction->opcode, operand1, instruction->mnemonic, operand1);
+               printf ("%02X %02X\t: %s #$%02X", instruction->opcode, operand1, instruction->mnemonic, operand1);
                break; // #$imm
          case IMPLIED:
-               printf ("%02x\t: %s", instruction->opcode, instruction->mnemonic);
+               printf ("%02X\t: %s", instruction->opcode, instruction->mnemonic);
             break; // Null operand1
          case RELATIVE:
             operand1 = getc(rom);
             pc++;
-            printf ("%02x %02x\t: %s $%04x", opcode, operand1, instruction->mnemonic, pc + (signed char)operand1);
+            printf ("%02X %02X\t: %s $%02X", opcode, operand1, instruction->mnemonic, pc + (signed char)operand1);
             break; // $xx
          case ABSOLUTE:
             operand1 = getc (rom);
             operand2 = getc (rom);
             pc+=2;
-            printf ("%02x %02x %02x\t: %s $%02x%02x", opcode, operand1, operand2, instruction->mnemonic, operand2, operand1);
+            printf ("%02X %02X %02X\t: %s $%02X%02X", opcode, operand1, operand2, instruction->mnemonic, operand2, operand1);
             pc += 2;
             break; // $xxxx
          case ZERO_PAGE:
             operand1 = getc (rom);
             pc++;
-            printf ("%02x %02x\t: %s $%02x", opcode, operand1, instruction->mnemonic, operand1);
+            printf ("%02X %02X\t: %s $%02X", opcode, operand1, instruction->mnemonic, operand1);
             break; // $xx
          case INDIRECT:
             operand1 = getc (rom);
             operand2 = getc (rom);
             pc += 2;
-            printf ("%02x %02x %02x\t: %s $%02x%02x", opcode, operand1, operand2, instruction->mnemonic, operand2, operand1);
+            printf ("%02X %02X %02X\t: %s $%02X%02X", opcode, operand1, operand2, instruction->mnemonic, operand2, operand1);
             break; // $xxxx
          case ABSOLUTE_X:
             operand1 = getc (rom);
             operand2 = getc (rom);
             pc += 2;
-            printf ("%02x %02x %02x\t: %s $%02x%02x,X", opcode, operand1, operand2, instruction->mnemonic, operand2, operand1);
+            printf ("%02X %02X %02X\t: %s $%02X%02X,X", opcode, operand1, operand2, instruction->mnemonic, operand2, operand1);
             break; // $xxxx,X
          case ABSOLUTE_Y:
             operand1 = getc (rom);
             operand2 = getc (rom);
             pc += 2;
-            printf ("%02x %02x %02x\t: %s $%02x%02x,X", opcode, operand1, operand2, instruction->mnemonic, operand2, operand1);
+            printf ("%02X %02X %02X\t: %s $%02X%02X,X", opcode, operand1, operand2, instruction->mnemonic, operand2, operand1);
             break; // $xxxx,Y
          case ZERO_PAGE_X:
             operand1 = getc (rom);
             pc++;
-            printf ("%02x %02x\t: %s $%02x,X", opcode, operand1, instruction->mnemonic, operand1);
+            printf ("%02X %02X\t: %s $%02X,X", opcode, operand1, instruction->mnemonic, operand1);
             break; // $xx,X
          case ZERO_PAGE_Y:
             operand1 = getc (rom);
             pc++;
-            printf ("%02x %02x\t: %s $%02x,Y", opcode, operand1, instruction->mnemonic, operand1);
+            printf ("%02X %02X\t: %s $%02X,Y", opcode, operand1, instruction->mnemonic, operand1);
             break; // $xx,Y (used for LDX instruction)
          case INDEX_INDIRECT:
             operand1 = getc (rom);
             pc++;
-            printf ("%02x %02x\t: %s ($%02x,X)", opcode, operand1, instruction->mnemonic, operand1);
+            printf ("%02X %02X\t: %s ($%02X,X)", opcode, operand1, instruction->mnemonic, operand1);
             break; // ($xx,X)
          case INDIRECT_INDEX:
             operand1 = getc (rom);
             pc++;
-            printf ("%02x %02x\t: %s ($%02x),Y", opcode, operand1, instruction->mnemonic, operand1);
+            printf ("%02X %02X\t: %s ($%02X),Y", opcode, operand1, instruction->mnemonic, operand1);
             break; // ($xx),Y
          default:
-            printf ("\nERROR: Unknown address mode encountered for instruction at %04x\n", pc);
+            printf ("\nERROR: Unknown address mode encountered for instruction at %02X\n", pc);
             return -1;
             break;
          }
