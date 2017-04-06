@@ -25,7 +25,7 @@ int disassemble (FILE * rom) {
       instruction = get_instruction (opcode);
 
       if (instruction == (instruction_t *)NULL) {
-         printf ("%02X\t: ; Unknown instruction, possibly data?", opcode);
+         printf ("%02X\t: \t\t ; Unknown instruction, possibly data?\n", opcode);
       } else {
          switch (instruction->address_mode) {
             case INVALID:
