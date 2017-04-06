@@ -98,5 +98,10 @@ void construct_opcode_table (enum cpu_revision);
  *    Print the contents of :c:data:`rt_opcode_table` to stdout. Useful for debugging misallocated opcodes or for reference purposes.
  */
 void print_opcode_table ();
+/**
+ * .. :c:function:: instruction_t * get_instruction (unsigned char opcode)
+ *    Retrieve the details of an instruction from the opcode table using it's binary representation.
+ */
+instruction_t * get_instruction (unsigned char);
 
 #endif // _INSTRUCTIONS_H

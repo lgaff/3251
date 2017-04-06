@@ -184,6 +184,10 @@ int opcode_table_sz () {
 
 instruction_t **rt_opcode_table;
 
+instruction_t * get_instruction (unsigned char opcode) {
+   return rt_opcode_table[(unsigned int)opcode];
+}
+
 void construct_opcode_table (enum cpu_revision revision) {
    rt_opcode_table = (instruction_t **)calloc (256, sizeof (instruction_t *));
    // TODO: Handle errors for calloc here.

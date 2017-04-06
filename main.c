@@ -10,6 +10,9 @@ int main (void) {
    print_opcode_table ();
 
    printf ("Done listing 6502 instructions\n");
+
+   instruction_t *instruction = get_instruction (238);
+   printf ("Instruction at slot 238 is %s\n", instruction->mnemonic);
    return 0;
 }
 
