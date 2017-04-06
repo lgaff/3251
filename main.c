@@ -20,7 +20,7 @@ int main (int argc, char * argv []) {
       printf ("ERROR: specify ROM file\n");
       return -1;
    }
-   printf ("Diassembling file %2\n", argv[1]);
+   printf ("Diassembling file %s\n", argv[1]);
 
    FILE * test = NULL;
    int flen = open_rom (argv[1], &test);
