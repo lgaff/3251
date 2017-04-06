@@ -1,5 +1,6 @@
 #include "opcodes.h"
-
+#include "file.h"
+#include "diassemble.h"
 #include <stdio.h>
 
 int main (void) {
@@ -13,6 +14,16 @@ int main (void) {
 
    instruction_t *instruction = get_instruction (238);
    printf ("Instruction at slot 238 is %s\n", instruction->mnemonic);
+
+   printf ("Diassembling file a.o65\n");
+
+   FILE * test = NULL;
+   int flen = open_rom ("a.o65", &test);
+   printf ("rom length %d\n", flen);
+
+   disassemble (test);
+
    return 0;
+
 }
 
