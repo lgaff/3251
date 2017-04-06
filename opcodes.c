@@ -92,6 +92,15 @@ instruction_t _opcode_table[] = {
 
    { "JSR",  0x20,  ABSOLUTE,        6,  0,  0,  REV_6502 },
 
+   { "LDA",  0xA9,  IMMEDIATE,       2,  0,  0,  REV_6502 },
+   { "LDA",  0xA5,  ZERO_PAGE,       2,  0,  0,  REV_6502 },
+   { "LDA",  0xB5,  ZERO_PAGE_X,     2,  0,  0,  REV_6502 },
+   { "LDA",  0xAD,  ABSOLUTE,        2,  0,  0,  REV_6502 },
+   { "LDA",  0xBD,  ABSOLUTE_X,      2,  0,  0,  REV_6502 },
+   { "LDA",  0xB9,  ABSOLUTE_Y,      2,  0,  0,  REV_6502 },
+   { "LDA",  0xA1,  INDEX_INDIRECT,  2,  0,  0,  REV_6502 },
+   { "LDA",  0xB1,  INDIRECT_INDEX,  2,  0,  0,  REV_6502 },
+
    { "LDX",  0xA2,  IMMEDIATE,       2,  0,  0,  REV_6502 },
    { "LDX",  0xA6,  ZERO_PAGE,       3,  0,  0,  REV_6502 },
    { "LDX",  0xB6,  ZERO_PAGE_Y,     4,  0,  0,  REV_6502 },
