@@ -25,8 +25,7 @@ int disassemble (FILE * rom) {
       instruction = get_instruction (opcode);
 
       if (instruction == (instruction_t *)NULL) {
-         printf ("ERROR: unknown instruction found at %02X: %02X\n", pc, opcode);
-         return -1;
+         printf ("%02X\t: ; Unknown instruction, possibly data?", opcode);
       } else {
          switch (instruction->address_mode) {
             case INVALID:
