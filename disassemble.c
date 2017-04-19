@@ -4,8 +4,8 @@
 #include "diassemble.h"
 #include "opcodes.h"
 
-int disassemble (FILE * rom) {
-   int pc = 0x8000;
+int disassemble (FILE * rom, int org) {
+   int pc = org;
    unsigned char opcode = 0;
    instruction_t *instruction;
    int rom_length = file_length (rom);
@@ -17,8 +17,8 @@ int disassemble (FILE * rom) {
       return -1;
    }
 
-   while (pc < rom_length + 0x8000) {
-      printf ("$%02X> ", pc);
+   while (pc < rom_length + org) {
+      printf ("$%04X> ", pc);
       pc++;
       instruction = (instruction_t *)NULL;
       opcode = getc(rom);

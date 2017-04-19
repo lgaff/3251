@@ -2,35 +2,54 @@
 #include "file.h"
 #include "diassemble.h"
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+enum ops {
+   DO_DISASM = 1 << 0
+};
 
 int main (int argc, char * argv []) {
    printf ("Constructing opcode table for 6502\n");
    construct_opcode_table (REV_6502);
+   char *input_filename = NULL;
+   char do_ops = 0;
+   unsigned int org = 0;
+   int flen = 0;
 
-   /** printf ("Printing 6502 instruction table\n"); */
-   /** print_opcode_table (); */
-   /**  */
-   /** printf ("Done listing 6502 instructions\n"); */
-   /**  */
-   /** instruction_t *instruction = get_instruction (238); */
-   /** printf ("Instruction at slot 238 is %s\n", instruction->mnemonic); */
-   /**  */
-
-   if (!argv[1]) {
-      printf ("ERROR: specify ROM file\n");
-      return -1;
+   char c;
+   while ((c = getopt(argc, argv, "i:ds:")) != -1) {
+      switch (c) {
+         case 'i':
+            input_filename = optarg;
+            break;
+         case 'd':
+            do_ops |= DO_DISASM;
+            break;
+         case 's':
+            org = atoi(optarg);
+            printf ("Setting ROM offset to %d\n", org);
+            break;
+      }
    }
-   printf ("Diassembling file %s\n", argv[1]);
 
-   FILE * test = NULL;
-   int flen = open_rom (argv[1], &test);
+
+   FILE * input_fh;
+   if (input_filename == NULL) {
+      printf ("TODO Lindsay must implement stdin processing\n");
+      return 0;
+   } else {
+      flen = open_rom (input_filename, &input_fh);
+   }
    if (!(flen > 0)) {
       printf ("ERROR: ROM file invalid");
       return -1;
    }
    printf ("rom length %d\n", flen);
 
-   disassemble (test);
+   if (do_ops & DO_DISASM)
+      disassemble (input_fh, org);
 
    return 0;
 
