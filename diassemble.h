@@ -11,6 +11,6 @@
  *   Eventually, disassemble should disassemble to a buffer rather than dumping to the console.
  */
 
-int disassemble (FILE *, int);
+int disassemble (FILE *, int, int);
 
 #endif // _DISASSEMBLE_H

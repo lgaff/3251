@@ -1,11 +1,11 @@
 CC=gcc
 
-CFLAGS=-Wall -Werror -xc
-OBJECTS=opcodes.o file.o disassemble.o main.o
+override CFLAGS+=-Wall -Werror -xc
+OBJECTS=opcodes.o file.o disassemble.o main.o debug.o
 
-all: 3251d
+all: 3251
 
-3251d: $(OBJECTS)
+3251: $(OBJECTS)
 	$(CC) $(OBJECTS) -o $@
 
 $(OBJECTS): %.o : %.c
