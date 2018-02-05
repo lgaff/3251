@@ -6,7 +6,7 @@
 int open_rom (char * fname, FILE **buf) {
   int flen = 0;
 
-  *buf = fopen (fname, "r");
+  *buf = fopen (fname, "rb");
 
   if (*buf == NULL) {
     printf ("ERROR: Could not open rom file %s: %d\n", fname, errno);
