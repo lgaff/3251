@@ -21,6 +21,7 @@ int disassemble (FILE * rom, int org, int opts) {
    }
 
    while (pc < rom_length + org) {
+      DEBUG ("LOOP ENTER %04X %02X", pc, opcode);
 
       if (opts & DO_FMTADD) {
          printf ("$%04X> ", pc);
@@ -28,6 +29,7 @@ int disassemble (FILE * rom, int org, int opts) {
       pc++;
       instruction = (instruction_t *)NULL;
       opcode = getc(rom);
+      DEBUG("OPCODE %02X", opcode);
       instruction = get_instruction (opcode);
 
       if (instruction == (instruction_t *)NULL) {
