@@ -22,7 +22,6 @@ int disassemble (FILE * rom, int org, int opts) {
 
    while (pc < rom_length + org) {
       DEBUG ("LOOP ENTER %04X %02X", pc, opcode);
-
       if (opts & DO_FMTADD) {
          printf ("$%04X> ", pc);
       }
@@ -31,7 +30,6 @@ int disassemble (FILE * rom, int org, int opts) {
       opcode = getc(rom);
       DEBUG("OPCODE %02X", opcode);
       instruction = get_instruction (opcode);
-
       if (instruction == (instruction_t *)NULL) {
          if (opts & DO_FMTBYT)
             printf ("%02X\t: ", opcode);
@@ -43,23 +41,23 @@ int disassemble (FILE * rom, int org, int opts) {
                return -1;
                break;
             case ACCUMULATOR:
-               if (opts & DO_FMTBYT) printf ("%02X\t: ", instruction->opcode);
+               if (opts & DO_FMTBYT) printf ("%02X:\t", instruction->opcode);
                printf ("%s", instruction->mnemonic);
                break; // Null operand1
             case IMMEDIATE:
                operand1 = getc(rom);
                pc++;
-               if (opts & DO_FMTBYT) printf ("%02X %02X\t: ", instruction->opcode, operand1);
+               if (opts & DO_FMTBYT) printf ("%02X %02X:\t", instruction->opcode, operand1);
                printf ("%s #$%02X", instruction->mnemonic, operand1);
                break; // #$imm
             case IMPLIED:
-               if (opts & DO_FMTBYT) printf ("%02X\t: ", instruction->opcode);
+               if (opts & DO_FMTBYT) printf ("%02X:\t", instruction->opcode);
                printf ("%s", instruction->mnemonic);
                break; // Null operand1
             case RELATIVE:
                operand1 = getc(rom);
                pc++;
-               if (opts & DO_FMTBYT) printf ("%02X %02X\t: ", instruction->opcode, operand1);
+               if (opts & DO_FMTBYT) printf ("%02X %02X:\t", instruction->opcode, operand1);
                printf ("%s $%02X", instruction->mnemonic, pc + (signed char)operand1);
                break; // $xx
          case ABSOLUTE:
@@ -72,7 +70,7 @@ int disassemble (FILE * rom, int org, int opts) {
          case ZERO_PAGE:
             operand1 = getc (rom);
             pc++;
-            if (opts & DO_FMTBYT) printf ("%02X %02X\t: ", instruction->opcode, operand1);
+            if (opts & DO_FMTBYT) printf ("%02X %02X:\t", instruction->opcode, operand1);
             printf ("%s $%02X", instruction->mnemonic, operand1);
             break; // $xx
          case INDIRECT:
@@ -85,6 +83,7 @@ int disassemble (FILE * rom, int org, int opts) {
          case ABSOLUTE_X:
             operand1 = getc (rom);
             operand2 = getc (rom);
+ 
             pc += 2;
             if (opts & DO_FMTBYT) printf ("%02X %02X %02X: ", instruction->opcode, operand1, operand2);
             printf ("%s $%02X%02X,X", instruction->mnemonic, operand2, operand1);
@@ -99,25 +98,25 @@ int disassemble (FILE * rom, int org, int opts) {
          case ZERO_PAGE_X:
             operand1 = getc (rom);
             pc++;
-               if (opts & DO_FMTBYT) printf ("%02X %02X\t: ", instruction->opcode, operand1);
+               if (opts & DO_FMTBYT) printf ("%02X %02X:\t", instruction->opcode, operand1);
             printf ("%s $%02X,X", instruction->mnemonic, operand1);
             break; // $xx,X
          case ZERO_PAGE_Y:
             operand1 = getc (rom);
             pc++;
-               if (opts & DO_FMTBYT) printf ("%02X %02X\t: ", instruction->opcode, operand1);
+               if (opts & DO_FMTBYT) printf ("%02X %02X:\t", instruction->opcode, operand1);
             printf ("%s $%02X,Y", instruction->mnemonic, operand1);
             break; // $xx,Y (used for LDX instruction)
          case INDEX_INDIRECT:
             operand1 = getc (rom);
             pc++;
-               if (opts & DO_FMTBYT) printf ("%02X %02X\t: ", instruction->opcode, operand1);
+               if (opts & DO_FMTBYT) printf ("%02X %02X:\t", instruction->opcode, operand1);
             printf ("%s ($%02X,X)", instruction->mnemonic, operand1);
             break; // ($xx,X)
          case INDIRECT_INDEX:
             operand1 = getc (rom);
             pc++;
-               if (opts & DO_FMTBYT) printf ("%02X %02X\t: ", instruction->opcode, operand1);
+               if (opts & DO_FMTBYT) printf ("%02X %02X:\t", instruction->opcode, operand1);
             printf ("%s ($%02X),Y", instruction->mnemonic, operand1);
             break; // ($xx),Y
          default:
@@ -125,7 +124,9 @@ int disassemble (FILE * rom, int org, int opts) {
             return -1;
             break;
          }
+         if (opts & DO_FMTBYT) printf ("\t;");
          printf ("\n");
+
       }
    }
    return 0;
