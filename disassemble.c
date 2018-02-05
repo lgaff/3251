@@ -32,8 +32,8 @@ int disassemble (FILE * rom, int org, int opts) {
       instruction = get_instruction (opcode);
       if (instruction == (instruction_t *)NULL) {
          if (opts & DO_FMTBYT)
-            printf ("%02X\t: ", opcode);
-         printf (".BYTE %02X\t\t ; Unknown instruction, possibly data?\n", opcode);
+            printf ("%02X:\t", opcode);
+         printf (".BYTE $%02X\t\t ; Unknown instruction, possibly data?\n", opcode);
       } else {
          switch (instruction->address_mode) {
             case INVALID:
@@ -42,7 +42,7 @@ int disassemble (FILE * rom, int org, int opts) {
                break;
             case ACCUMULATOR:
                if (opts & DO_FMTBYT) printf ("%02X:\t", instruction->opcode);
-               printf ("%s", instruction->mnemonic);
+               printf ("%s A", instruction->mnemonic);
                break; // Null operand1
             case IMMEDIATE:
                operand1 = getc(rom);
@@ -78,7 +78,7 @@ int disassemble (FILE * rom, int org, int opts) {
             operand2 = getc (rom);
             pc += 2;
                if (opts & DO_FMTBYT) printf ("%02X %02X %02X: ", instruction->opcode, operand1, operand2);
-            printf ("%s $%02X%02X", instruction->mnemonic, operand2, operand1);
+            printf ("%s ($%02X%02X)", instruction->mnemonic, operand2, operand1);
             break; // $xxxx
          case ABSOLUTE_X:
             operand1 = getc (rom);
