@@ -66,7 +66,6 @@ int disassemble (FILE * rom, int org, int opts) {
             pc+=2;
             if (opts & DO_FMTBYT) printf ("%02X %02X %02X: ", instruction->opcode, operand1, operand2);
             printf ("%s $%02X%02X", instruction->mnemonic, operand2, operand1);
-            pc += 2;
             break; // $xxxx
          case ZERO_PAGE:
             operand1 = getc (rom);
