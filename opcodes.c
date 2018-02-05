@@ -20,8 +20,8 @@ instruction_t _opcode_table[] = {
    { "AND",  0x2D,  ABSOLUTE,        4,  0,  0,  REV_6502 },
    { "AND",  0x3D,  ABSOLUTE_X,      4,  0,  0,  REV_6502 },
    { "AND",  0x39,  ABSOLUTE_Y,      4,  0,  0,  REV_6502 },
-   { "AND",  0x21,  IMMEDIATE,       6,  0,  0,  REV_6502 },
-   { "AND",  0x31,  IMMEDIATE,       5,  0,  0,  REV_6502 },
+   { "AND",  0x21,  INDEX_INDIRECT,  6,  0,  0,  REV_6502 },
+   { "AND",  0x31,  INDIRECT_INDEX,  5,  0,  0,  REV_6502 },
 
    { "ASL",  0x0A,  ACCUMULATOR,     2,  0,  0,  REV_6502 },
    { "ASL",  0x06,  ZERO_PAGE,       5,  0,  0,  REV_6502 },
@@ -183,7 +183,7 @@ instruction_t _opcode_table[] = {
    { "STX",  0x8E,  ABSOLUTE,        4,  0,  0,  REV_6502 },
 
    { "STY",  0x84,  ZERO_PAGE,       3,  0,  0,  REV_6502 },
-   { "STY",  0x94,  ZERO_PAGE_Y,     4,  0,  0,  REV_6502 },
+   { "STY",  0x94,  ZERO_PAGE_X,     4,  0,  0,  REV_6502 },
    { "STY",  0x8C,  ABSOLUTE,        4,  0,  0,  REV_6502 }
 };
 
