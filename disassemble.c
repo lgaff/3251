@@ -58,7 +58,7 @@ int disassemble (FILE * rom, int org, int opts) {
                operand1 = getc(rom);
                pc++;
                if (opts & DO_FMTBYT) printf ("%02X %02X:\t", instruction->opcode, operand1);
-               printf ("%s $%02X", instruction->mnemonic, pc + (signed char)operand1);
+               printf ("%s $%04X", instruction->mnemonic, pc + (signed char)operand1);
                break; // $xx
          case ABSOLUTE:
             operand1 = getc (rom);
