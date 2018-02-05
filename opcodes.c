@@ -1,5 +1,5 @@
 #include "opcodes.h"
-
+#include "debug.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -194,6 +194,7 @@ int opcode_table_sz () {
 instruction_t **rt_opcode_table;
 
 instruction_t * get_instruction (unsigned char opcode) {
+      DEBUG("get_instruction %02X", opcode);
    return rt_opcode_table[(unsigned int)opcode];
 }
 
